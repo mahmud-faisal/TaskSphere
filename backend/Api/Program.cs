@@ -53,7 +53,7 @@ builder.Services.AddAuthorization();
 // 4. Add Controllers
 builder.Services.AddControllers();
 
-// 5. Configure Swagger with JWT Bearer
+// 5. Configure Swagger & OpenAPI with JWT Bearer
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -96,11 +96,12 @@ if (app.Environment.IsDevelopment() || true)
         c.RoutePrefix = "swagger";
     });
 
-    // Configure Scalar API Reference UI
+    // Configure Scalar API Reference UI (pointing to Swashbuckle's OpenAPI document endpoint)
     app.MapScalarApiReference(options =>
     {
-        options.WithTitle("Assignment System API Reference")
+        options.WithTitle("EduAssign API Reference")
                .WithTheme(ScalarTheme.Purple)
+               .WithOpenApiRoutePattern("/swagger/v1/swagger.json")
                .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
     });
 }
