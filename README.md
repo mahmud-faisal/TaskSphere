@@ -88,6 +88,157 @@ AssignmentProject/
 
 ---
 
+## 🗄️ Database Design
+
+The database is designed **database-first** (`database/schema.sql` is the single source of truth) and targets **PostgreSQL 15+**. It is normalized to **Third Normal Form (3NF)**: every non-key column depends only on its table's primary key, many-to-many relationships are resolved through explicit junction tables, and repeated/derivable data is avoided.
+
+### Entity Relationship Diagram
+
+```mermaid
+erDiagram
+    USERS ||--o{ TEACHERSUBJECTASSIGNMENTS : "teaches (as Teacher)"
+    USERS ||--o{ STUDENTENROLLMENTS      : "enrolls (as Student)"
+    USERS ||--o{ ASSIGNMENTS             : "creates (as Teacher)"
+    USERS ||--o{ SUBMISSIONS             : "submits (as Student)"
+    USERS |o--o{ SUBMISSIONS             : "grades (as Teacher, nullable)"
+
+    CLASSCOURSES ||--o{ SUBJECTS                    : "offers"
+    CLASSCOURSES ||--o{ TEACHERSUBJECTASSIGNMENTS   : "scopes"
+    CLASSCOURSES ||--o{ STUDENTENROLLMENTS          : "enrolls into"
+    CLASSCOURSES ||--o{ ASSIGNMENTS                 : "hosts"
+
+    SUBJECTS ||--o{ TEACHERSUBJECTASSIGNMENTS : "taught via"
+    SUBJECTS ||--o{ ASSIGNMENTS               : "grouped under"
+
+    ASSIGNMENTS ||--o{ SUBMISSIONS : "receives"
+
+    USERS {
+        uuid    Id PK
+        varchar Name
+        varchar Email UK
+        varchar PasswordHash
+        varchar Role "Admin | Teacher | Student"
+        timestamptz CreatedAt
+        boolean IsActive
+    }
+
+    CLASSCOURSES {
+        uuid    Id PK
+        varchar Name
+        text    Description
+    }
+
+    SUBJECTS {
+        uuid Id PK
+        varchar Name
+        uuid ClassCourseId FK
+    }
+
+    TEACHERSUBJECTASSIGNMENTS {
+        uuid Id PK
+        uuid TeacherId FK
+        uuid SubjectId FK
+        uuid ClassCourseId FK
+    }
+
+    STUDENTENROLLMENTS {
+        uuid Id PK
+        uuid StudentId FK
+        uuid ClassCourseId FK
+    }
+
+    ASSIGNMENTS {
+        uuid Id PK
+        varchar Title
+        text Description
+        uuid SubjectId FK
+        uuid ClassCourseId FK
+        uuid TeacherId FK
+        timestamptz Deadline
+        int MaxMarks
+        varchar Status "Draft | Published"
+        boolean AllowResubmission
+        timestamptz CreatedAt
+        timestamptz UpdatedAt
+    }
+
+    SUBMISSIONS {
+        uuid Id PK
+        uuid AssignmentId FK
+        uuid StudentId FK
+        text AnswerText
+        varchar FileUrl
+        timestamptz SubmittedAt
+        timestamptz UpdatedAt
+        varchar Status "Submitted|Late|Graded|ResubmissionRequired"
+        int MarksObtained
+        text Feedback
+        timestamptz GradedAt
+        uuid GradedByTeacherId FK
+    }
+```
+
+### Entity Overview
+
+| Table | Purpose | Key Constraints |
+|---|---|---|
+| `Users` | Single table for all three roles (Admin, Teacher, Student), discriminated by `Role`. | `Email` unique; `Role` restricted via `CHECK`; `IsActive` supports soft-deactivation instead of hard deletes. |
+| `ClassCourses` | A class/course grouping (e.g., "Grade 10 Science & Tech"). | Root of the academic hierarchy. |
+| `Subjects` | A subject taught within a specific class/course. | `ClassCourseId` FK — a subject always belongs to exactly one class/course. |
+| `TeacherSubjectAssignments` | **Junction table** resolving the many-to-many-to-many relationship between Teachers, Subjects, and ClassCourses (a teacher may teach several subjects across several classes). | Composite unique constraint `(TeacherId, SubjectId, ClassCourseId)` prevents duplicate allocations. |
+| `StudentEnrollments` | **Junction table** resolving the many-to-many relationship between Students and ClassCourses. | Composite unique constraint `(StudentId, ClassCourseId)` prevents duplicate enrollment. |
+| `Assignments` | An assignment created by a Teacher, scoped to a Subject + ClassCourse, with a lifecycle (`Draft` → `Published`). | `MaxMarks > 0`; `Status` restricted via `CHECK`. |
+| `Submissions` | A Student's response to an Assignment, including grading metadata. | Composite unique constraint `(AssignmentId, StudentId)` enforces **one submission per student per assignment** (updated in place for resubmissions); `MarksObtained` constrained to be non-negative and validated at the application layer against `MaxMarks`. |
+
+### Relationship Cardinality
+
+| Relationship | Cardinality | Notes |
+|---|---|---|
+| ClassCourse → Subjects | 1 : N | A class/course offers many subjects; a subject belongs to one class/course. |
+| Teacher ↔ Subject ↔ ClassCourse | M : N : N (via `TeacherSubjectAssignments`) | A teacher can be allocated to multiple subject/class combinations; a subject/class combination can (in principle) have multiple teacher allocations. |
+| Student ↔ ClassCourse | M : N (via `StudentEnrollments`) | A student may be enrolled in more than one class/course; a class/course has many enrolled students. |
+| Subject / ClassCourse / Teacher → Assignment | 1 : N (×3) | Each assignment references exactly one subject, one class/course, and one owning teacher. |
+| Assignment ↔ Student | M : N (via `Submissions`, unique per pair) | Each assignment can receive many submissions (one per student); a student can submit to many assignments. |
+| Teacher (grader) → Submission | 1 : N (nullable) | `GradedByTeacherId` is nullable until grading occurs; `ON DELETE SET NULL` preserves the submission if the grading teacher's account is later removed. |
+
+### Design Decisions & Rationale
+
+- **UUID primary keys** (`uuid_generate_v4()`) instead of auto-incrementing integers — avoids sequential ID enumeration, simplifies merging/seeding across environments, and matches distributed-system best practice.
+- **Single `Users` table with a `Role` discriminator** rather than separate `Admins`/`Teachers`/`Students` tables — avoids duplicating shared attributes (name, email, password hash, audit fields) and keeps authentication/authorization logic uniform. Role-specific behavior is enforced in the Application layer, not the schema.
+- **Explicit junction tables** (`TeacherSubjectAssignments`, `StudentEnrollments`) instead of array/JSON columns — keeps the schema in 3NF, enables referential integrity via FK constraints, and allows efficient indexed lookups in both directions.
+- **`CHECK` constraints over lookup tables** for low-cardinality, rarely-changing enumerations (`Role`, assignment `Status`, submission `Status`) — trades a small amount of denormalization for simplicity, since these values are effectively fixed application enums rather than user-managed data.
+- **Soft deactivation (`Users.IsActive`)** instead of hard deletes — preserves referential history for assignments, submissions, and grades tied to a user even after they're deactivated.
+- **`ON DELETE CASCADE`** on ownership relationships (e.g., deleting a `ClassCourse` cascades to its `Subjects`, `Assignments`, enrollments, and allocations) versus **`ON DELETE SET NULL`** on the non-essential `Submissions.GradedByTeacherId` — cascades protect data consistency for core hierarchy, while `SET NULL` avoids losing a student's submission/grade if the grading teacher is later removed.
+- **`TIMESTAMPTZ` everywhere** instead of naive `TIMESTAMP` — stores all dates/times with timezone awareness, avoiding ambiguity for deadline enforcement across regions.
+- **Composite unique constraints** (`UQ_TeacherSubjectAssignment`, `UQ_StudentEnrollment`, `UQ_Submissions_Assignment_Student`) enforce business rules directly at the database level rather than relying solely on application logic, guarding against race conditions on concurrent writes.
+
+### Indexing Strategy
+
+| Index | Table / Column(s) | Rationale |
+|---|---|---|
+| `IX_Users_Email` | `Users(Email)` | Speeds up login lookups (`WHERE Email = ...`), in addition to the implicit unique index from the `UNIQUE` constraint. |
+| `IX_Subjects_ClassCourseId` | `Subjects(ClassCourseId)` | Fast retrieval of all subjects for a given class/course. |
+| `IX_TeacherSubjectAssignments_TeacherId` | `TeacherSubjectAssignments(TeacherId)` | Fast lookup of a teacher's subject/class allocations (used to authorize assignment creation). |
+| `IX_StudentEnrollments_StudentId` | `StudentEnrollments(StudentId)` | Fast lookup of a student's enrolled classes/courses (used to authorize assignment visibility/submission). |
+| `IX_Assignments_ClassCourseId` | `Assignments(ClassCourseId)` | Powers the student assignment feed, filtered by enrolled class/course. |
+| `IX_Assignments_TeacherId` | `Assignments(TeacherId)` | Powers the teacher's "my assignments" dashboard view. |
+| `IX_Submissions_AssignmentId` | `Submissions(AssignmentId)` | Powers the teacher's submission review list per assignment. |
+| `IX_Submissions_StudentId` | `Submissions(StudentId)` | Powers the student's "my grades/submissions" dashboard view. |
+
+### Entity-Relationship Hierarchy (Textual)
+
+```
+ClassCourse (1) ───< Subject (N)
+ClassCourse (1) ───< Assignment (N) >─── Subject (1)
+Teacher (User) (1) ───< Assignment (N)
+ClassCourse (N) ──< TeacherSubjectAssignment >── Subject (N) ── Teacher (N)
+ClassCourse (N) ──< StudentEnrollment >── Student (N)
+Assignment (1) ───< Submission (N) >─── Student (1)
+Teacher (0..1) ───< Submission (N)   [grading]
+```
+
+---
+
 ## 🔑 Standard API Response Model (`ApiResponse<T>`)
 
 Per mandatory requirements (Section 0.5), **every single API endpoint** returns JSON wrapped in this exact shape:
