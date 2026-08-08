@@ -54,28 +54,28 @@ AssignmentProject/
 │   └── seed.sql                # Seed data with demo accounts and assignments
 │
 ├── backend/
-│   ├── Domain/                 # Enterprise Domain layer: Entities, Enums, Exceptions
+│   ├── AssignmentSystem.Domain/        # Enterprise Domain layer: Entities, Enums, Exceptions
 │   │   ├── Entities/           # User, ClassCourse, Subject, Assignment, Submission, etc.
 │   │   ├── Enums/              # UserRole, AssignmentStatus, SubmissionStatus
 │   │   └── Exceptions/         # DomainException, NotFoundException, ForbiddenException, etc.
 │   │
-│   ├── Application/            # CQRS commands/queries (MediatR), DTOs, interfaces, validators
+│   ├── AssignmentSystem.Application/   # CQRS commands/queries (MediatR), DTOs, interfaces, validators
 │   │   ├── Common/             # Interfaces (IRepository, IUnitOfWork), Behaviors (Validation, Logging)
 │   │   ├── DTOs/               # Auth, User, Academic, Assignment, Submission DTOs
 │   │   └── Features/           # CQRS feature handlers (Auth, Users, Academic, Assignments, Submissions)
 │   │
-│   ├── Infrastructure/         # EF Core DbContext, Repositories, JWT generator, PasswordHasher
+│   ├── AssignmentSystem.Infrastructure/# EF Core DbContext, Repositories, JWT generator, PasswordHasher
 │   │   ├── Persistence/        # AppDbContext, Repository implementations, UnitOfWork
 │   │   ├── Authentication/     # JwtTokenGenerator, PasswordHasher (BCrypt)
 │   │   └── Services/           # CurrentUserService (ClaimsPrincipal reader)
 │   │
-│   ├── Api/                    # Presentation layer: ASP.NET Core controllers, middleware, Swagger
+│   ├── AssignmentSystem.Api/           # Presentation layer: ASP.NET Core controllers, middleware, Swagger
 │   │   ├── Controllers/        # Auth, Users, Academic, Assignments, Submissions controllers
 │   │   ├── Middleware/         # ExceptionHandlingMiddleware (catches & wraps errors in ApiResponse<T>)
 │   │   ├── Models/             # Standard ApiResponse<T> wrapper
 │   │   └── Program.cs          # DI registration, CORS, Authentication, Swagger config
 │   │
-│   └── Tests/                  # xUnit unit test suite for business & authorization rules
+│   └── AssignmentSystem.Tests/         # xUnit unit test suite for business & authorization rules
 │
 └── frontend/                   # Next.js App Router, TypeScript & Tailwind CSS
     ├── src/
@@ -312,7 +312,7 @@ psql -U postgres -h 127.0.0.1 -d assignment_db -f "database/seed.sql"
 ### Step 2: Run Backend API (.NET 10)
 
 ```bash
-cd backend/Api
+cd backend/AssignmentSystem.Api
 dotnet run
 ```
 
