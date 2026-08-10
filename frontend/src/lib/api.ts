@@ -1,9 +1,27 @@
 import { ApiResponse } from '@/types';
 
 const getApiBaseUrl = (): string => {
-  const raw = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').trim().replace(/\/$/, '');
+  const raw = (process.env.NEXT_PUBLIC_API_URL || 'https://localhost:7278/api').trim().replace(/\/$/, '');
   return raw.endsWith('/api') ? raw : `${raw}/api`;
 };
+
+// const getApiBaseUrl = (): string => {
+//   console.log('ENV:', process.env.NEXT_PUBLIC_API_URL);
+
+//   const raw = process.env.NEXT_PUBLIC_API_URL;
+
+//   if (!raw) {
+//     throw new Error('NEXT_PUBLIC_API_URL is not loaded');
+//   }
+
+//   return raw.trim().replace(/\/$/, '');
+// };
+
+// const API_BASE_URL = getApiBaseUrl();
+
+// console.log('API BASE URL:', API_BASE_URL);
+
+
 
 const API_BASE_URL = getApiBaseUrl();
 
