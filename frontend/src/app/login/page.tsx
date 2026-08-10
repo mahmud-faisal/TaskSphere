@@ -42,22 +42,22 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[80vh] flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-slate-900/60 backdrop-blur-xl p-8 rounded-2xl border border-slate-800 shadow-2xl shadow-indigo-500/10">
+      <div className="max-w-md w-full space-y-8 bg-gray-800/60 backdrop-blur-xl p-8 rounded-2xl border border-slate-800 shadow-2xl shadow-indigo-500/10">
         <div className="text-center space-y-2">
-          <div className="inline-flex p-3 rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-2">
+          <div className="inline-flex p-3 rounded-2xl bg-indigo-900/10 text-indigo-800 border border-indigo-500/20 mb-2">
             <BookOpen className="w-8 h-8" />
           </div>
           <h2 className="text-3xl font-extrabold text-white tracking-tight">
             Welcome to EduAssign
           </h2>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-300">
             Sign in to access your role-based academic dashboard
           </p>
         </div>
 
         {/* Quick Demo Accounts Selector */}
         <div className="space-y-3 pt-2">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 text-center">
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-200 text-center">
             ⚡ Quick Demo Sign-In
           </p>
           <div className="grid grid-cols-3 gap-2">
