@@ -123,7 +123,7 @@ export default function StudentDashboard() {
 
       {/* Assignments Grid */}
       <div className="space-y-4">
-        <h2 className="text-lg font-bold text-slate-100">Course Assignments</h2>
+        <h2 className="text-lg font-bold text-black-100">Course Assignments</h2>
 
         {loading ? (
           <div className="py-12 text-center text-slate-400 text-sm">Loading course assignments...</div>
@@ -140,15 +140,15 @@ export default function StudentDashboard() {
               return (
                 <div
                   key={a.id}
-                  className="bg-slate-900/60 backdrop-blur-md border border-slate-800 hover:border-slate-700 p-5 rounded-2xl space-y-4 transition-all flex flex-col justify-between"
+                  className="bg-slate-200/60 backdrop-blur-md border border-slate-800 hover:border-slate-700 p-5 rounded-2xl space-y-4 transition-all flex flex-col justify-between"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-indigo-400 font-semibold">{a.subjectName}</span>
-                      <span className="text-xs text-slate-400 font-medium">Max Marks: {a.maxMarks}</span>
+                      <span className="text-xs text-black-900 font-medium font-bold">Max Marks: {a.maxMarks}</span>
                     </div>
 
-                    <h3 className="text-base font-bold text-slate-100">{a.title}</h3>
+                    <h3 className="text-base font-bold text-grey-100">{a.title}</h3>
                     <p className="text-xs text-slate-400">{a.description || 'No description provided.'}</p>
 
                     <div className="pt-2 flex flex-wrap items-center justify-between text-xs text-slate-400 border-t border-slate-800/60">

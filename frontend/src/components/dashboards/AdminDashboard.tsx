@@ -172,7 +172,7 @@ export default function AdminDashboard() {
             <Users className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs text-slate-400 font-medium">Total Users</p>
+            <p className="text-xs text-slate-200 font-medium">Total Users</p>
             <h3 className="text-2xl font-bold text-slate-100">{users.length}</h3>
           </div>
         </div>
@@ -182,7 +182,7 @@ export default function AdminDashboard() {
             <BookOpen className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs text-slate-400 font-medium">Classes & Courses</p>
+            <p className="text-xs text-slate-200 font-medium">Classes & Courses</p>
             <h3 className="text-2xl font-bold text-slate-100">{classes.length}</h3>
           </div>
         </div>
@@ -192,7 +192,7 @@ export default function AdminDashboard() {
             <Layers className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs text-slate-400 font-medium">Subjects</p>
+            <p className="text-xs text-slate-200 font-medium">Subjects</p>
             <h3 className="text-2xl font-bold text-slate-100">{subjects.length}</h3>
           </div>
         </div>
@@ -202,7 +202,7 @@ export default function AdminDashboard() {
             <UserCheck className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs text-slate-400 font-medium">Active Enrollments</p>
+            <p className="text-xs text-slate-200 font-medium">Active Enrollments</p>
             <h3 className="text-2xl font-bold text-slate-100">{studentEnrollments.length}</h3>
           </div>
         </div>
@@ -281,7 +281,7 @@ export default function AdminDashboard() {
       {activeTab === 'users' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-slate-100">System Users</h2>
+            <h2 className="text-lg font-bold text-black-100">System Users</h2>
             <button
               onClick={() => setShowUserModal(true)}
               className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center gap-2 transition-all shadow-md shadow-indigo-600/20"
@@ -292,8 +292,8 @@ export default function AdminDashboard() {
 
           <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
             <table className="w-full text-left text-sm text-slate-300">
-              <thead className="bg-slate-950/80 text-xs font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-800">
-                <tr>
+              <thead className="bg-slate-600/80 text-xs font-semibold text-slate-200 uppercase tracking-wider border-b border-slate-800">
+                <tr className=''>
                   <th className="py-3.5 px-4">Name</th>
                   <th className="py-3.5 px-4">Email</th>
                   <th className="py-3.5 px-4">Role</th>
@@ -303,9 +303,9 @@ export default function AdminDashboard() {
               </thead>
               <tbody className="divide-y divide-slate-800/60">
                 {users.map((u) => (
-                  <tr key={u.id} className="hover:bg-slate-850/50 transition-colors">
+                  <tr key={u.id} className="hover:bg-slate-600/50 transition-colors">
                     <td className="py-3.5 px-4 font-medium text-slate-100">{u.name}</td>
-                    <td className="py-3.5 px-4 text-slate-400">{u.email}</td>
+                    <td className="py-3.5 px-4 text-slate-100">{u.email}</td>
                     <td className="py-3.5 px-4">
                       <span
                         className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${
@@ -350,7 +350,7 @@ export default function AdminDashboard() {
           {/* Classes Column */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-slate-100">Class / Courses</h2>
+              <h2 className="text-lg font-bold text-black-100">Class / Courses</h2>
               <button
                 onClick={() => setShowClassModal(true)}
                 className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-indigo-600/20"
@@ -371,7 +371,7 @@ export default function AdminDashboard() {
           {/* Subjects Column */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-slate-100">Subjects</h2>
+              <h2 className="text-lg font-bold text-black-100">Subjects</h2>
               <button
                 onClick={() => setShowSubjectModal(true)}
                 className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-indigo-600/20"
@@ -397,7 +397,7 @@ export default function AdminDashboard() {
       {activeTab === 'teacher-assignments' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-slate-100">Teacher Allocations</h2>
+            <h2 className="text-lg font-bold text-black-100">Teacher Allocations</h2>
             <button
               onClick={() => setShowAssignModal(true)}
               className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center gap-2 transition-all shadow-md shadow-indigo-600/20"
@@ -433,7 +433,7 @@ export default function AdminDashboard() {
       {activeTab === 'student-enrollments' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-slate-100">Student Enrollments</h2>
+            <h2 className="text-lg font-bold text-black-100">Student Enrollments</h2>
             <button
               onClick={() => setShowEnrollModal(true)}
               className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center gap-2 transition-all shadow-md shadow-indigo-600/20"

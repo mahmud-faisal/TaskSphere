@@ -204,12 +204,12 @@ export default function TeacherDashboard() {
 
       {/* Assignments List */}
       <div className="space-y-4">
-        <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+        <h2 className="text-lg font-bold text-black-100 flex items-center gap-2">
           <BookOpen className="w-5 h-5 text-indigo-400" /> My Assignments
         </h2>
 
         {assignments.length === 0 ? (
-          <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-12 text-center">
+          <div className="bg-slate-200/40 border border-slate-800 rounded-2xl p-12 text-center">
             <p className="text-slate-400 text-sm">No assignments created yet. Click "Create New Assignment" to get started.</p>
           </div>
         ) : (
@@ -217,7 +217,7 @@ export default function TeacherDashboard() {
             {assignments.map((a) => (
               <div
                 key={a.id}
-                className="bg-slate-900/60 backdrop-blur-md border border-slate-800 hover:border-slate-700 p-5 rounded-2xl space-y-3 transition-all flex flex-col justify-between"
+                className="bg-slate-200/60 backdrop-blur-md border border-slate-800 hover:border-slate-700 p-5 rounded-2xl space-y-3 transition-all flex flex-col justify-between"
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
@@ -233,7 +233,7 @@ export default function TeacherDashboard() {
                     <span className="text-xs font-medium text-slate-400">Max Marks: {a.maxMarks}</span>
                   </div>
 
-                  <h3 className="text-base font-bold text-slate-100">{a.title}</h3>
+                  <h3 className="text-base font-bold text-gray-700">{a.title}</h3>
                   <p className="text-xs text-slate-400 line-clamp-2">{a.description || 'No description.'}</p>
 
                   <div className="pt-2 flex flex-wrap gap-3 text-xs text-slate-400 border-t border-slate-800/60">
