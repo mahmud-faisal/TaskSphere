@@ -10,8 +10,8 @@
 INSERT INTO "Users" ("Id", "Name", "Email", "PasswordHash", "Role", "CreatedAt", "IsActive")
 VALUES 
     ('11111111-1111-1111-1111-111111111111', 'System Admin', 'admin@school.com', '$2a$11$IGXPULZzRIz97HDw7/73y.S79w1MQOWmRwxwefiXdGw21w9l0RwV6', 'Admin', NOW(), true),
-    ('22222222-2222-2222-2222-222222222222', 'Sarah Jenkins (Teacher)', 'teacher@school.com', '$2a$11$sk1Wo4l9.t5k2twDdji1le2X7Z9hN/2H.z/fNwIMFZ7SO1WaFK7GC', 'Teacher', NOW(), true),
-    ('33333333-3333-3333-3333-333333333333', 'Alex Rivera (Student)', 'student@school.com', '$2a$11$xpFjpX/y.ZCab7jKSBLZiOI.NioF/C1ZEG0RlZ7x/lIWz7LYch4C2', 'Student', NOW(), true)
+    ('22222222-2222-2222-2222-222222222222', 'Sarah Helium (Teacher)', 'teacher@school.com', '$2a$11$sk1Wo4l9.t5k2twDdji1le2X7Z9hN/2H.z/fNwIMFZ7SO1WaFK7GC', 'Teacher', NOW(), true),
+    ('33333333-3333-3333-3333-333333333333', 'Neon  (Student)', 'student@school.com', '$2a$11$xpFjpX/y.ZCab7jKSBLZiOI.NioF/C1ZEG0RlZ7x/lIWz7LYch4C2', 'Student', NOW(), true)
 ON CONFLICT ("Id") DO NOTHING;
 
 -- 2. Seed ClassCourse
