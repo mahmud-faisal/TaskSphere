@@ -280,6 +280,36 @@ Use these seeded accounts to log in and test role-specific functionalities:
 
 ## 🚀 Setup & Execution Guide
 
+### Option 1: Quick Start with Docker Compose (Recommended)
+
+Run the entire application (PostgreSQL + .NET 10 API + Next.js Frontend) with a single command:
+
+```bash
+# Clone the repository and navigate to the project directory
+git clone <repository-url>
+cd AssignmentProject
+
+# Build and start all services in detached mode
+docker compose up --build -d
+```
+
+#### Accessing Services:
+- **Frontend App**: `http://localhost:3000`
+- **Backend Swagger UI**: `http://localhost:5000/swagger`
+- **Backend Scalar API Ref**: `http://localhost:5000/scalar/v1`
+- **PostgreSQL Database**: `localhost:5432` (`database: assignment_db`, `user: postgres`, `password: postgres`)
+
+> **Note**: Database tables (`database/schema.sql`) and demo seed data (`database/seed.sql`) are automatically executed upon container startup.
+
+To stop and remove containers:
+```bash
+docker compose down
+```
+
+---
+
+### Option 2: Manual Local Setup
+
 ### Prerequisites
 - **.NET 10 SDK** installed (`dotnet --version`)
 - **Node.js 20+** and **npm** installed (`node -v`, `npm -v`)

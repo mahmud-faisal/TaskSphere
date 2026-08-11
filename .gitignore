@@ -4,3 +4,4 @@ AGENT_INSTRUCTIONS.md
 
 bin/
 obj/
+/frontend/node_modules

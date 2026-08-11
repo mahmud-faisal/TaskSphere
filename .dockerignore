@@ -1,0 +1,13 @@
+.git
+.gitignore
+.vs
+.vscode
+**/bin
+**/obj
+node_modules
+.next
+out
+*.user
+*.suo
+README.md
+AGENT_INSTRUCTIONS.md
