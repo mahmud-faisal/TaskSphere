@@ -2,7 +2,9 @@
 
 A complete, production-quality, role-based **Assignment & Submission Management System** built with **ASP.NET Core (.NET 10)** following **Clean Architecture**, **CQRS with MediatR**, **Database-First EF Core** on **PostgreSQL**, and a modern **Next.js (App Router)** frontend with **TypeScript** & **Tailwind CSS**. 
 
-*To run on your computer follow the instructions given in* **Setup & Execution Guide**  
+> ## **Ready to run it on your computer?**
+> Follow the steps in ***Setup & Execution Guide*** to get started quickly and effortlessly.
+
 
 ---
 
