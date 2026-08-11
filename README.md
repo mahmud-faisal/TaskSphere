@@ -1,6 +1,6 @@
 # Assignment & Submission Management System
 
-A complete, production-quality, role-based **Assignment & Submission Management System** built with **ASP.NET Core (.NET 10)** following **Clean Architecture**, **CQRS with MediatR**, **Database-First EF Core** on **PostgreSQL**, and a modern **Next.js (App Router)** frontend with **TypeScript** & **Tailwind CSS**.
+A complete, production-quality, role-based **Assignment & Submission Management System** built with **ASP.NET Core (.NET 10)** following **Clean Architecture**, **CQRS with MediatR**, **Database-First EF Core** on **PostgreSQL**, and a modern **Next.js (App Router)** frontend with **TypeScript** & **Tailwind CSS**. *To run on your computer follow the instructions given in* **Setup & Execution Guide**  
 
 ---
 
@@ -288,7 +288,7 @@ Use these seeded accounts to log in and test role-specific functionalities:
 | ![Screenshot 3](https://drive.google.com/uc?export=view&id=1k-kjTa-hoYpTjIWWt-rsj_291SO4TqJn) | ![Screenshot 4](https://drive.google.com/uc?export=view&id=1_JE0oeENyvc1Hc635bcaQJzSXiOi8Ghg) |
 | ![Screenshot 5](https://drive.google.com/uc?export=view&id=1HjGZcGYKyiBVmz4Qa5XSUyDeM5hc_E0M) | ![Screenshot 6](https://drive.google.com/uc?export=view&id=1aI-bqBxnJS9LgMLMQ-6qBqwcwOvTluG-) |
 
-> **Note:** These images are hosted on Google Drive. For them to render correctly on GitHub, make sure sharing is set to **"Anyone with the link"**. If they don't display, use the direct view links below:
+> **Note:** These images are hosted on Google Drive. If they don't display, use the direct view links below:
 > - [Screenshot 1](https://drive.google.com/file/d/1epFrRH4GNI0j7xNmusOWXp30kNOx9jPp/view?usp=sharing)
 > - [Screenshot 2](https://drive.google.com/file/d/19vVwAv9IPEMTdj66mC45S0QMrp-WmXJR/view?usp=sharing)
 > - [Screenshot 3](https://drive.google.com/file/d/1k-kjTa-hoYpTjIWWt-rsj_291SO4TqJn/view?usp=sharing)
