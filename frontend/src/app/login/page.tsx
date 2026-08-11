@@ -58,7 +58,7 @@ export default function LoginPage() {
         {/* Quick Demo Accounts Selector */}
         <div className="space-y-3 pt-2">
           <p className="text-xs font-semibold uppercase tracking-wider text-slate-200 text-center">
-            ⚡ Quick Demo Sign-In
+             Quick Demo Sign-In
           </p>
           <div className="grid grid-cols-3 gap-2">
             <button
