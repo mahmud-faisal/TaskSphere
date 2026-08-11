@@ -4,23 +4,23 @@ A complete, production-quality, role-based **Assignment & Submission Management 
 
 ---
 
-## 🌟 Features & Role Capabilities
+##  Features & Role Capabilities
 
-### 👑 Admin
+###  Admin
 - **User Management**: Create, view, update, and deactivate Admin, Teacher, and Student accounts.
 - **Academic Setup**: Create and manage Classes/Courses and Subjects.
 - **Teacher Allocations**: Map teachers to specific subjects and classes/courses.
 - **Student Enrollments**: Enroll students into classes/courses.
 - **System Visibility**: Full read visibility into all system assignments and student submissions.
 
-### 👩‍🏫 Teacher
+###  Teacher
 - **Assignment Lifecycle**: Create, update, publish, or delete assignments for subjects/classes they are assigned to teach.
 - **Draft & Publish Controls**: Keep assignments in `Draft` state (hidden from students) until ready, or publish immediately.
 - **Submission Reviews**: View all student submissions for created assignments.
 - **Grading & Feedback**: Assign marks obtained (`MarksObtained <= MaxMarks`) and provide constructive feedback to students.
 - **Status Management**: Mark submission statuses (`Graded`, `ResubmissionRequired`, `Late`).
 
-### 🎓 Student
+###  Student
 - **Assignment Feed**: View published assignments assigned to their enrolled class/course.
 - **Submission Portal**: Submit text solutions and/or file attachments for published assignments before deadlines.
 - **Resubmission Support**: Update submissions before the deadline or when resubmissions are explicitly allowed.
@@ -28,7 +28,7 @@ A complete, production-quality, role-based **Assignment & Submission Management 
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Layer | Technology |
 |---|---|
@@ -43,7 +43,7 @@ A complete, production-quality, role-based **Assignment & Submission Management 
 
 ---
 
-## 📁 Solution Architecture
+##  Solution Architecture
 
 The backend strictly follows **Clean Architecture** boundaries with dependencies flowing inward only:
 
@@ -88,7 +88,7 @@ AssignmentProject/
 
 ---
 
-## 🗄️ Database Design
+##  Database Design
 
 The database is designed **database-first** (`database/schema.sql` is the single source of truth) and targets **PostgreSQL 15+**. It is normalized to **Third Normal Form (3NF)**: every non-key column depends only on its table's primary key, many-to-many relationships are resolved through explicit junction tables, and repeated/derivable data is avoided.
 
@@ -239,7 +239,7 @@ Teacher (0..1) ───< Submission (N)   [grading]
 
 ---
 
-## 🔑 Standard API Response Model (`ApiResponse<T>`)
+##  Standard API Response Model (`ApiResponse<T>`)
 
 Per mandatory requirements (Section 0.5), **every single API endpoint** returns JSON wrapped in this exact shape:
 
@@ -266,7 +266,7 @@ namespace BdjobsMIS.Aggregator.Models
 
 ---
 
-## 🔑 Demo Credentials
+##  Demo Credentials
 
 Use these seeded accounts to log in and test role-specific functionalities:
 
@@ -278,7 +278,27 @@ Use these seeded accounts to log in and test role-specific functionalities:
 
 ---
 
-## 🚀 Setup & Execution Guide
+##  Screenshots
+
+> Screenshots of the application in action (login, dashboards, and core workflows).
+
+| | |
+|---|---|
+| ![Screenshot 1](https://drive.google.com/uc?export=view&id=1epFrRH4GNI0j7xNmusOWXp30kNOx9jPp) | ![Screenshot 2](https://drive.google.com/uc?export=view&id=19vVwAv9IPEMTdj66mC45S0QMrp-WmXJR) |
+| ![Screenshot 3](https://drive.google.com/uc?export=view&id=1k-kjTa-hoYpTjIWWt-rsj_291SO4TqJn) | ![Screenshot 4](https://drive.google.com/uc?export=view&id=1_JE0oeENyvc1Hc635bcaQJzSXiOi8Ghg) |
+| ![Screenshot 5](https://drive.google.com/uc?export=view&id=1HjGZcGYKyiBVmz4Qa5XSUyDeM5hc_E0M) | ![Screenshot 6](https://drive.google.com/uc?export=view&id=1aI-bqBxnJS9LgMLMQ-6qBqwcwOvTluG-) |
+
+> **Note:** These images are hosted on Google Drive. For them to render correctly on GitHub, make sure sharing is set to **"Anyone with the link"**. If they don't display, use the direct view links below:
+> - [Screenshot 1](https://drive.google.com/file/d/1epFrRH4GNI0j7xNmusOWXp30kNOx9jPp/view?usp=sharing)
+> - [Screenshot 2](https://drive.google.com/file/d/19vVwAv9IPEMTdj66mC45S0QMrp-WmXJR/view?usp=sharing)
+> - [Screenshot 3](https://drive.google.com/file/d/1k-kjTa-hoYpTjIWWt-rsj_291SO4TqJn/view?usp=sharing)
+> - [Screenshot 4](https://drive.google.com/file/d/1_JE0oeENyvc1Hc635bcaQJzSXiOi8Ghg/view?usp=sharing)
+> - [Screenshot 5](https://drive.google.com/file/d/1HjGZcGYKyiBVmz4Qa5XSUyDeM5hc_E0M/view?usp=sharing)
+> - [Screenshot 6](https://drive.google.com/file/d/1aI-bqBxnJS9LgMLMQ-6qBqwcwOvTluG-/view?usp=sharing)
+
+---
+
+##  Setup & Execution Guide
 
 ### Option 1: Quick Start with Docker Compose (Recommended)
 
@@ -375,7 +395,7 @@ dotnet test AssignmentSystem.slnx
 
 ---
 
-## 📌 Key Business Rules Implemented & Tested
+##  Key Business Rules Implemented & Tested
 
 1. **Draft Visibility Constraint**: Students cannot view or submit answers to `Draft` assignments.
 2. **Class Enrollment Enforcement**: Students can only view and submit assignments for classes they are enrolled in.
@@ -387,7 +407,7 @@ dotnet test AssignmentSystem.slnx
 
 ---
 
-## 💡 Assumptions & Design Decisions
+##  Assumptions & Design Decisions
 
 1. **Database-First Schema Authority**: `database/schema.sql` serves as the authoritative source of truth. Clean domain entities in `Domain` decouple business rules from persistence mechanisms.
 2. **Password Security**: Passwords are saved as BCrypt hashes using cost factor 11 (`BCrypt.Net-Next`). Plaintext passwords are never stored or logged.
