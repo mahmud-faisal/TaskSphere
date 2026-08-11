@@ -1,6 +1,8 @@
 # Assignment & Submission Management System
 
-A complete, production-quality, role-based **Assignment & Submission Management System** built with **ASP.NET Core (.NET 10)** following **Clean Architecture**, **CQRS with MediatR**, **Database-First EF Core** on **PostgreSQL**, and a modern **Next.js (App Router)** frontend with **TypeScript** & **Tailwind CSS**. *To run on your computer follow the instructions given in* **Setup & Execution Guide**  
+A complete, production-quality, role-based **Assignment & Submission Management System** built with **ASP.NET Core (.NET 10)** following **Clean Architecture**, **CQRS with MediatR**, **Database-First EF Core** on **PostgreSQL**, and a modern **Next.js (App Router)** frontend with **TypeScript** & **Tailwind CSS**. 
+
+*To run on your computer follow the instructions given in* **Setup & Execution Guide**  
 
 ---
 
@@ -306,7 +308,7 @@ Run the entire application (PostgreSQL + .NET 10 API + Next.js Frontend) with a 
 
 ```bash
 # Clone the repository and navigate to the project directory
-git clone <repository-url>
+git clone https://github.com/mahmud-faisal/EduAssign-Pro.git
 cd AssignmentProject
 
 # Build and start all services in detached mode
