@@ -12,8 +12,3 @@ public interface IRepository<T> where T : class
     void Delete(T entity);
     Task<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
 }
-
-public interface IUnitOfWork : IDisposable
-{
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-}
