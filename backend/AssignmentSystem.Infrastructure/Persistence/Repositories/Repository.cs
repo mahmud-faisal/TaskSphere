@@ -49,23 +49,3 @@ public class Repository<T> : IRepository<T> where T : class
         return await Context.Set<T>().AnyAsync(predicate, cancellationToken);
     }
 }
-
-public class UnitOfWork : IUnitOfWork
-{
-    private readonly AppDbContext _context;
-
-    public UnitOfWork(AppDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return await _context.SaveChangesAsync(cancellationToken);
-    }
-
-    public void Dispose()
-    {
-        _context.Dispose();
-    }
-}
