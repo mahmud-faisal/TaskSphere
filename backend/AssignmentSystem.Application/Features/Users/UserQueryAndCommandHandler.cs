@@ -9,6 +9,7 @@ namespace AssignmentSystem.Application.Features.Users;
 
 public class UserQueryAndCommandHandler :
     IRequestHandler<GetUsersQuery, IReadOnlyList<UserDto>>,
+    IRequestHandler<GetUsersWithPaginationQuery, IReadOnlyList<UserDto>>,
     IRequestHandler<GetUserByIdQuery, UserDto>,
     IRequestHandler<CreateUserCommand, UserDto>,
     IRequestHandler<UpdateUserCommand, UserDto>,
@@ -31,6 +32,11 @@ public class UserQueryAndCommandHandler :
     public async Task<IReadOnlyList<UserDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
         var users = await _userRepository.GetAllAsync(cancellationToken);
+        return users.Select(u => MapToDto(u)).ToList();
+    }
+    public async Task<IReadOnlyList<UserDto>> Handle(GetUsersWithPaginationQuery request, CancellationToken cancellationToken)
+    {
+        var users = await _userRepository.GetPaginatedUsersAsync(request,cancellationToken);
         return users.Select(u => MapToDto(u)).ToList();
     }
 
