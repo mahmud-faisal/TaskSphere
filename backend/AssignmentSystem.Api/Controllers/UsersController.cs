@@ -15,6 +15,12 @@ public class UsersController : ApiControllerBase
         var users = await Mediator.Send(new GetUsersQuery());
         return OkResponse(users);
     }
+    [HttpGet("users")]
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<UserDto>>>> GetPaginatedAll(UsersWithPaginationRequestDto request)
+    {
+        var users = await Mediator.Send(new GetUsersWithPaginationQuery(request));
+        return OkResponse(users);
+    }
 
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<ApiResponse<UserDto>>> GetById(Guid id)
@@ -43,4 +49,6 @@ public class UsersController : ApiControllerBase
         await Mediator.Send(new DeactivateUserCommand(id));
         return SuccessResponse("User deactivated successfully");
     }
+
+    
 }
